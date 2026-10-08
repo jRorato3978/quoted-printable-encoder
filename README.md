@@ -51,3 +51,10 @@ illegal in quoted-printable because some mail transports strip trailing
 whitespace and would corrupt the body. This encoder escapes such bytes as
 `=20` / `=09` rather than emitting them literally. Mid-line spaces and tabs
 are left literal, as the spec allows.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
